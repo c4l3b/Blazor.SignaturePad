@@ -104,13 +104,14 @@ window.Mobsites.Blazor.SignaturePads = {
 
 class Mobsites_Blazor_SignaturePad extends SignaturePad {
     constructor(dotNetObjRef, elemRefs, options) {
-        super(elemRefs.canvas, { penColor: options.color ? options.color : 'black' });
+        super(elemRefs.canvas, { penColor: options.color ? options.color : 'black'});
         this.dotNetObjRef = dotNetObjRef;
         this.elemRefs = elemRefs;
         this.dotNetObjOptions = options;
-        this.onEnd = function () {
+        this.onEnd = () => {
             this.dotNetObjRef.invokeMethodAsync('SignatureChanged');
         };
+        this.addEventListener('endStroke', this.onEnd);
     }
     resizeCanvas() {
         // Store signature in memory before resizing so as not to lose it.
